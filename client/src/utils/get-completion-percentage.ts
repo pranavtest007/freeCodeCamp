@@ -13,11 +13,14 @@ export function getCompletedPercentage(
     currentBlockIds,
     currentChallengeId
   );
+  // A block with no challenges has nothing to complete: 0%, not NaN.
+  if (currentBlockIds.length === 0) return 0;
+
   const completedPercent = Math.round(
     (completedChallengesInBlock / currentBlockIds.length) * 100
   );
 
-  return completedPercent > 100 ? 100 : completedPercent;
+  return Math.min(completedPercent, 100);
 }
 
 export function getCompletedChallengesInBlock(
